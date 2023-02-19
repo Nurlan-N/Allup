@@ -1,5 +1,8 @@
 ﻿using Allup.DataAccessLayer;
 using Allup.Models;
+using Allup.ViewComponents;
+using Allup.ViewModels.HomeViewModels;
+using Allup.ViewModels.ProductViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +16,7 @@ namespace Allup.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public  IActionResult Index()
         {
             return View();
         }
