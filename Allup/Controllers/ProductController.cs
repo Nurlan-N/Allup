@@ -2,7 +2,6 @@
 using Allup.Models;
 using Allup.ViewComponents;
 using Allup.ViewModels.HomeViewModels;
-using Allup.ViewModels.ProductViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

@@ -2,7 +2,14 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+@{
+    ProductVM productVM = new ProductVM
+            {
+                FeaturesProducts = Model.FeaturesProducts,
+                BestSellerProducts = Model.BestSellerProducts,
+                NewArrivalProducts = Model.NewArrivalProducts
+            };
+}
 <!--====== Slider Part Start ======-->
 
 @await Component.InvokeAsync("Slider")
@@ -35,7 +42,7 @@
 <!--====== Category Part Ends ======-->
 <!--====== Product Part Start ======-->
 
-
+@await Component.InvokeAsync("Product",productVM)
 
 <!--====== Product Part Ends ======-->
 <!--====== Special Products Part Start ======-->

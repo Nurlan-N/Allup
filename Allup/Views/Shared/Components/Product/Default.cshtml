@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Product>
+﻿@model ProductVM
 
 <section class="product-area pt-100 pb-100">
     <div class="container-fluid custom-container">
@@ -21,15 +21,14 @@
         </div> <!-- row -->
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="new" role="tabpanel" aria-labelledby="new-tab">
-                @await Html.PartialAsync("_ProductListPartial",Model)
+                @await Html.PartialAsync("_ProductListPartial",Model.FeaturesProducts)
             </div>
             <div class="tab-pane fade" id="bestseller" role="tabpanel" aria-labelledby="bestseller-tab">
-                <div class="product-items">
-                    @await Html.PartialAsync("_ProductListPartial",Model)
-                </div>
-                <div class="tab-pane fade" id="featured" role="tabpanel" aria-labelledby="featured-tab">
-                    @await Html.PartialAsync("_ProductListPartial",Model)
-                </div>
-            </div> <!-- tab content -->
-        </div> <!-- container -->
+                @await Html.PartialAsync("_ProductListPartial",Model.BestSellerProducts)
+            </div>
+            <div class="tab-pane fade" id="featured" role="tabpanel" aria-labelledby="featured-tab">
+                @await Html.PartialAsync("_ProductListPartial",Model.NewArrivalProducts)
+            </div>
+        </div> <!-- tab content -->
+    </div> <!-- container -->
 </section>

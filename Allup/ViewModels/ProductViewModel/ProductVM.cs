@@ -1,6 +1,6 @@
 ﻿using Allup.Models;
 
-namespace Allup.ViewModels.ProductViewModels
+namespace Allup.ViewModels.ProductViewModel
 {
     public class ProductVM
     {
