@@ -9,10 +9,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
 });
-builder.Services.AddScoped< ILayoutService ,LayoutService>();
+builder.Services.AddScoped<ILayoutService, LayoutService>();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout= TimeSpan.FromSeconds(10);
+    options.IdleTimeout = TimeSpan.FromSeconds(10);
 });
 builder.Services.AddHttpContextAccessor();
 
@@ -22,6 +22,10 @@ var app = builder.Build();
 app.UseSession();
 
 app.UseStaticFiles();
+app.MapControllerRoute(
+            name: "areas",
+            pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}"
+          );
 app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

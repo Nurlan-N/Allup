@@ -1,0 +1,45 @@
+﻿@model Category
+@{
+    ViewData["Title"] = "Create";
+    //IEnumerable<Category> categories = ViewBag.Categories;
+ }
+
+<div class="col-lg-2">
+    <h1 class="h3 mb-4 text-gray-800">Category Create Page</h1>
+</div>
+<div class="row">
+    <div class="col-lg-8">
+        <form method="post" enctype="multipart/form-data">
+            <div class="mb-3 form-check">
+                <input asp-for="IsMain" class="form-check-input">
+                <label asp-for="IsMain" class="form-check-label" for="exampleCheck1">Check me out</label>
+                <span asp-validation-for=IsMain class="text text-danger"></span>
+
+            </div>
+            <div class="mb-3">
+                <label asp-for=Name class="form-label"></label>
+                <input asp-for=Name class="form-control">
+                <span asp-validation-for=Name class="text text-danger"></span>
+            </div>
+            <div id="fileInput" class="form-group">
+                <label asp-for="File" for="exampleFormControlFile1">Example file input</label>
+                <input asp-for="File" accept="image/jpeg" type="file" class="form-control-file">
+                <span asp-validation-for=File class="text text-danger"></span>
+
+            </div>
+            <div id="parentList" class="form-group">
+                <label for="exampleFormControlSelect1">Example select</label>
+                <select asp-for="ParentId" class="form-control"  asp-items="new SelectList(ViewBag.Categories,nameof(Category.Id), nameof(Category.Name))">
+                   @* @foreach (Category category in categories)
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }*@
+                </select>
+                <span asp-validation-for=ParentId class="text text-danger"></span>
+
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
