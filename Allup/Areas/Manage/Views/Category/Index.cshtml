@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Category>
+﻿@model PageNatedList<Category>
 
 @{
     ViewData["Title"] = "Index";
@@ -51,5 +51,31 @@
             </tbody>
         </table>
     </div>
+    <div class="col-lg-12">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                @if (Model.PageIndex > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-area="manage" asp-action="index" asp-controller="category" asp-route-pageIndex=@(Model.PageIndex -1)>Previous</a>
+                    </li>
+
+                }
+                @for (int i = 1; i <= Model.EndPage; i++)
+                {
+                    <li class="page-item @(Model.PageIndex==i ? "active": "" )">
+                        <a class="page-link" asp-area="manage" asp-action="index" asp-controller="category" asp-route-pageIndex=@i>@i</a>
+                    </li>
+                }
+                @if (Model.PageIndex < Model.TotalPage)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-area="manage" asp-action="index" asp-controller="category" asp-route-pageIndex=@(Model.PageIndex +1)>Next</a>
+                    </li>
+
+                }
+            </ul>
+        </nav>
+    </div> 
 </div>
 

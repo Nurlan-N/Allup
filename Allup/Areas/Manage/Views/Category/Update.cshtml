@@ -1,11 +1,11 @@
 ﻿@model Category
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Update";
     //IEnumerable<Category> categories = ViewBag.Categories;
  }
 
 <div class="col-lg-2">
-    <h1 class="h3 mb-4 text-gray-800">Category Create Page</h1>
+    <h1 class="h3 mb-4 text-gray-800">Category Update Page</h1>
 </div>
 <div class="row">
     <div class="col-lg-8">
@@ -29,7 +29,7 @@
             </div>
             <div id="parentList" class="form-group">
                 <label for="exampleFormControlSelect1">Example select</label>
-                <select asp-for="ParentId" class="form-control"  asp-items="new SelectList(ViewBag.Categories,nameof(Category.Id), nameof(Category.Name))">
+                <select asp-for="ParentId" class="form-control"  asp-items="new SelectList(ViewBag.Categories,nameof(Category.Id), nameof(Category.Name),Model.ParentId)">
                    @* @foreach (Category category in categories)
                     {
                         <option value="@category.Id">@category.Name</option>
@@ -42,7 +42,6 @@
         </form>
     </div>
 </div>
-
 @section Scripts{
     @await Html.PartialAsync("_Validations")
 }

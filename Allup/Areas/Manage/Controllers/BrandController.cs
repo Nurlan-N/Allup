@@ -1,5 +1,6 @@
 ﻿using Allup.DataAccessLayer;
 using Allup.Models;
+using Allup.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,14 +16,14 @@ namespace Allup.Areas.Manage.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageIndex = 1)
         {
-            IEnumerable<Brand> brands = await _context.Brands
-                .Include(b=> b.Products.Where(p => p.IsDeleted == false))
+            IQueryable<Brand> brands = _context.Brands
+                .Include(b => b.Products.Where(p => p.IsDeleted == false))
                 .Where(b => b.IsDeleted == false)
-                .OrderByDescending(b => b.Id).ToListAsync();
+                .OrderByDescending(b => b.Id);
 
-            return View(brands);
+            return View(PageNatedList<Brand>.Create(brands,pageIndex,3));
         }
 
         [HttpGet]
@@ -32,6 +33,7 @@ namespace Allup.Areas.Manage.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Brand  brand)
         {
             if (!ModelState.IsValid) 
@@ -54,7 +56,7 @@ namespace Allup.Areas.Manage.Controllers
 
             return RedirectToAction("Index");
         }
-
+        [HttpGet]
         public async Task<IActionResult> Detail(int? id)
         {
             if (id == null){return BadRequest();}
@@ -64,7 +66,7 @@ namespace Allup.Areas.Manage.Controllers
 
             return View(brand);
         }
-
+        [HttpGet]
         public async Task<IActionResult> Update(int? id)
         {
             if (id == null)
@@ -79,6 +81,7 @@ namespace Allup.Areas.Manage.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(int? id, Brand brand)
         {
             if (!ModelState.IsValid) { return View(brand); }
@@ -101,7 +104,7 @@ namespace Allup.Areas.Manage.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
-
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) { return BadRequest(); }
