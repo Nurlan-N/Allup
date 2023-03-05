@@ -1,12 +1,15 @@
 ﻿using Allup.DataAccessLayer;
 using Allup.Models;
 using Allup.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace Allup.Areas.Manage.Controllers
 {
     [Area("manage")]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class BrandController : Controller
     {
         private readonly AppDbContext _context;
@@ -102,17 +105,34 @@ namespace Allup.Areas.Manage.Controllers
             dbBrand.UpdatedAt= brand.UpdatedAt;
 
             await _context.SaveChangesAsync();
+
+            TempData["Success"] = $"{dbBrand.Name} - bu məhsul uğurla yenilendi";
+
             return RedirectToAction("Index");
         }
         [HttpGet]
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, int pageIndex = 1)
         {
             if (id == null) { return BadRequest(); }
 
             Brand brand = await _context.Brands.Include(b => b.Products.Where(b => b.IsDeleted == false)).FirstOrDefaultAsync(b => b.IsDeleted == false && b.Id == id);
+
             if (brand == null) { return NotFound(); }
 
-            return View(brand);
+            brand.IsDeleted = true;
+            brand.DeletedBy = User.Identity.Name;
+            brand.DeletedAt = DateTime.UtcNow.AddHours(4);
+
+            await _context.SaveChangesAsync();
+
+            IQueryable<Brand> brands = _context.Brands.Include(b => b.Products.Where(p => p.IsDeleted == false))
+                .Where(b => b.IsDeleted == false).OrderByDescending(b => b.Id);
+
+
+            return PartialView("_BrandIndexPartial", PageNatedList<Brand>.Create(brands, pageIndex, 3));
+            
+
+            //return View(brand);
         }
     }
 }

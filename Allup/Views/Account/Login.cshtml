@@ -1,0 +1,42 @@
+﻿@model LoginVM
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<!--====== Login Part Start ======-->
+
+<section class="login-area pt-10">
+    <div class="container-fluid custom-container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="login-register-wrapper mt-30">
+                    <h4 class="allup-title">Login to Your Account</h4>
+                    <form  method="post">
+                        <div asp-validation-summary="ModelOnly" class="text text-danger"></div>
+                        <div class="form-group">
+                            <input asp-for="Email" class="form-control form-control-user" placeholder="Email Address">
+                            <span asp-validation-for="Email" class="text text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Password" class="form-control form-control-user" placeholder="Password">
+                            <span asp-validation-for="Password" class="text text-danger"></span>
+                        </div>
+                        <div class="custom-checkbox mt-30">
+                            <input type="checkbox" id="account">
+                            <label for="account"></label>
+                            <p>Remember me</p>
+                        </div>
+                        <div class="single-form">
+                            <button type="submit" class="btn btn-primary btn-user btn-block">
+                                Login
+                            </button>
+                        </div>
+                    </form>
+                    <p class="mt-20"><a href="#">Lost your password?</a></p>
+                    <p class="mt-10">No account? <a  asp-action="register" asp-controller="account">Create one here.</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

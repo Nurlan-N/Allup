@@ -1,0 +1,34 @@
+﻿@model UserChangeRoleVM
+
+@{
+    ViewData["Title"] = "ChangeRole";
+}
+
+
+<div class="row">
+    <div class="col-lg-2">
+        <h1 class="h3 mb-4 text-gray-800">User Change Role Page</h1>
+    </div>
+    <div class="col-lg-8">
+        <form method="post">
+            <div class="mb-3 d-none">
+                <label asp-for=UserId class="form-labe l"></label>
+                <input asp-for=UserId class="form-control">
+                <span asp-validation-for=UserId class="text text-danger"></span>
+            </div>
+            <div id="parentList" class="form-group">
+                <label for="exampleFormControlSelect1">Example select</label>
+                <select asp-for="RoleId" class="form-control" asp-items="new SelectList(ViewBag.Role,nameof(IdentityRole.Id), nameof(IdentityRole.Name))">
+                   
+                </select>
+                <span asp-validation-for=RoleId  class="text text-danger"></span>
+
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    @await Html.PartialAsync("_Validations")
+}
+ 

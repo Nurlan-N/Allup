@@ -1,0 +1,57 @@
+﻿@model RegisterVM
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<section class="register-area pt-10">
+    <div class="container-fluid custom-container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="login-register-wrapper mt-30">
+                    <h4 class="allup-title">Creat New Account</h4>
+                    <p class="mt-10">Already have an account? <a href="login.html">Log in instead!</a></p>
+                        <form  method="post">
+                            <div asp-validation-summary="ModelOnly" class="text text-danger"></div>
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input asp-for="Name" class="form-control form-control-user" placeholder="First Name">
+                                    <span asp-validation-for="Name" class="text text-danger"></span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input asp-for="SurName" class="form-control form-control-user" placeholder="Last Name">
+                                    <span asp-validation-for="SurName" class="text text-danger"></span>
+                                </div>
+                                <div class="col-sm-12 mt-3">
+                                    <input asp-for="FatherName" class="form-control form-control-user" placeholder="Father Name">
+                                </div>
+                                <span asp-validation-for="FatherName" class="text text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="Email" class="form-control form-control-user" placeholder="Email Address">
+                                <span asp-validation-for="Email" class="text text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="UserName" class="form-control form-control-user" placeholder="User Name ">
+                                <span asp-validation-for="UserName" class="text text-danger"></span>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input asp-for="Password" class="form-control form-control-user" placeholder="Password">
+                                    <span asp-validation-for="Password" class="text text-danger"></span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input asp-for="ConfirimPassword" class="form-control form-control-user" placeholder="Repeat Password">
+                                    <span asp-validation-for="ConfirimPassword" class="text text-danger"></span>
+                                </div>
+                        <div class="single-form">
+                            <button type="submit" class="main-btn main-btn-2">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

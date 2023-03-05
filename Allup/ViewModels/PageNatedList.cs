@@ -12,19 +12,29 @@ namespace Allup.ViewModels
             int start = PageIndex - 2;
             int end = PageIndex + 2;
 
-            if (start <= 0)
+            if (totalpage > 5)
             {
-                end = end - (start - 1);
-                start = 1;
+                if (start <= 0)
+                {
+                    end = end - (start - 1);
+                    start = 1;
+                }
+                if (end > TotalPage)
+                {
+                    end = TotalPage;
+                    start = totalpage - 4;
+                }
+                StartPage = start;
+                EndPage = end;
+                this.AddRange(queries);
             }
-            if (end > TotalPage)
+            else
             {
-                end = TotalPage;
-                start = totalpage - 4;
+                StartPage = 1;
+                EndPage = totalpage;
+                this.AddRange(queries);
+
             }
-            StartPage = start;
-            EndPage = end;
-            this.AddRange(queries);
 
         }
 

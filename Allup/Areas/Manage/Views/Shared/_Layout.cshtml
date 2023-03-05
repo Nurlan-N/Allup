@@ -1,4 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@inject UserManager<AppUser> userManeger
+@{
+    AppUser appUser = null;
+
+    {
+         appUser = await userManeger.FindByNameAsync(User.Identity.Name);
+
+    }
+}
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -13,15 +23,20 @@
 
     <!-- Custom fonts for this template-->
     <link href="~/manage/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="~/manage/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+
 
 </head>
 
 <body id="page-top">
+    @if (TempData["Success"] != null)
+    {
+        <input type="hidden" id="success" value="@TempData["Success"]" />
+    }
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -66,6 +81,18 @@
                 <a class="nav-link" asp-action="index" asp-area="manage" asp-controller="category">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Category</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" asp-action="index" asp-area="manage" asp-controller="product">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Product</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" asp-action="index" asp-area="manage" asp-controller="user">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Users</span>
                 </a>
             </li>
 
@@ -256,14 +283,14 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">@appUser.Name @appUser.SurName</span>
                                 <img class="img-profile rounded-circle"
-                                     src="~/manage/img/undraw_profile.svg">
+                                     src="~/manage/img/@appUser.ProfilImage">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                  aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" asp-area="manage" asp-controller="account" asp-action="profile">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -329,12 +356,11 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" asp-area="manage" asp-controller="account" asp-action="logout">Logout</a>
                 </div>
             </div>
         </div>
     </div>
-
     <!-- Bootstrap core JavaScript-->
     <script src="~/manage/vendor/jquery/jquery.min.js"></script>
     <script src="~/manage/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -349,9 +375,40 @@
     <script src="~/manage/vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css" rel="stylesheet">
     <script src="~/manage/js/demo/chart-area-demo.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <script src="~/manage/js/demo/chart-pie-demo.js"></script>
     <script src="~/manage/js/custom.js" asp-append-version="true"></script>
+    
+    @if (TempData["Success"] != null)
+    {
+        <script>
+            let value = document.getElementById('success').value
+            toastr["success"](value)
+
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+        </script>
+    }
 
 </body>
 
